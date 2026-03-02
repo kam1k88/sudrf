@@ -1,5 +1,28 @@
-sudrf bigdata docs scrabber-script from local json.zip to yandex_cloud_storage_bucket (AWS CLI)
-python 3.11
+# Менеджер батчевой загрузки судебных документов
+
+Автоматизированный скрипт для извлечения ссылок на документы из большого JSON-архива и их загрузки в Yandex Cloud Object Storage с интеллектуальной дедупликацией и управлением батчами.
+
+## Описание
+
+Скрипт обрабатывает большой архив судебных документов (json.zip), извлекает ссылки на вложения и загружает их в облачное хранилище Yandex Cloud батчами по 300 файлов.
+
+### Основные возможности
+
+- **Потоковая обработка**: Чтение JSON из архива без полной распаковки в память
+- **Батчевая загрузка**: Обработка документов батчами по 300 файлов с отслеживанием состояния
+- **Дедупликация**: Bloom-фильтры для исключения дубликатов по ссылкам и содержимому
+- **Многопоточность**: Автоматическая адаптация количества потоков (3-6) в зависимости от нагрузки
+- **Обработка ошибок**: Retry-логика с экспоненциальной задержкой для 503/404 ошибок
+- **Синхронизация**: Управление состоянием батчей между локальной системой и облаком
+- **Резервное копирование**: Возможность скачивания/загрузки батчей
+
+### Требования
+
+- Python 3.11
+- Yandex Cloud Object Storage (совместимый с AWS S3 API)
+- Переменные окружения: `YC_ACCESS_KEY_ID`, `YC_SECRET_ACCESS_KEY`
+
+sudrf bigdata docs scraper-script from local json.zip to yandex_cloud_storage_bucket (AWS CLI)
 <img width="645" height="207" alt="image" src="https://github.com/user-attachments/assets/9f3a3dd0-2a2e-4b4b-9e2f-219584d84e10" />
 <img width="595" height="800" alt="image" src="https://github.com/user-attachments/assets/7876f837-c268-4475-b577-9a34482cf3a5" />
 <img width="1912" height="599" alt="image" src="https://github.com/user-attachments/assets/22f972c3-7e4b-4135-b3a7-8fb2b80ffb3c" />
